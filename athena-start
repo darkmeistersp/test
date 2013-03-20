@@ -7,11 +7,11 @@ inst_launch_workaround
 PATH=./:$PATH
 print_start() {
   #    more << EOF
-  echo "Athena Starting..."
-  echo "            (c) 2013 rAthena Project"
+  echo "Iniciando spAthena..."
+  echo "            (c) 2013 Proyecto spAthena"
   echo ""
   echo ""
-  echo "checking..."
+  echo "comprobando..."
   #EOF
 }
 
@@ -32,11 +32,11 @@ start_serv(){
   if [ -z ${PSRUN} ]; then
     exec ./$1&
     echo $! > .$1.pid
-    echo "Server '$1' started at `date +"%m-%d-%H:%M-%S"`"
-    echo "Server '$1' started at `date +"%m-%d-%H:%M-%S"`" >> ${LOGFILE}
+    echo "Servidor '$1' iniciado a `date +"%m-%d-%H:%M-%S"`"
+    echo "Servidor '$1' iniciado a `date +"%m-%d-%H:%M-%S"`" >> ${LOGFILE}
   else
-    echo "Can't start '$1', cause is already running p${PSRUN}"
-    echo "Can't start '$1', cause is already running p${PSRUN}" >> ${LOGFILE}
+    echo "Imposible iniciar '$1', porque ya se ha iniciado p${PSRUN}"
+    echo "Imposible iniciar '$1', porque ya se ha iniciado p${PSRUN}" >> ${LOGFILE}
   fi
 }
 
@@ -49,8 +49,8 @@ watch_serv(){
    get_status $1
    if [ -z ${PSRUN} ]; then
      $count=$count+1
-     echo "server '$1' is down" >> ${LOGFILE}
-     echo "restarting server at time at `date +"%m-%d-%H:%M-%S"`">> ${LOGFILE}
+     echo "servidor '$1' esta caido" >> ${LOGFILE}
+     echo "reiniciando servidor a `date +"%m-%d-%H:%M-%S"`">> ${LOGFILE}
      exec ./$1&
      echo $! > .$1.pid   
      if [ $3 ] && [ $3 -lt $count ]; then break; fi
@@ -65,7 +65,7 @@ restart(){
     do
     while true; do
 	get_status ${i}
-	if [ ${PSRUN} ]; then echo "'${i}' is still running p${PSRUN} waiting end"; sleep 2;
+	if [ ${PSRUN} ]; then echo "'${i}' todavia esta funcionando p${PSRUN} esperando a que se cierre"; sleep 2;
         else break; fi
     done
   done
@@ -76,20 +76,20 @@ case $1 in
     'start')
         print_start
         check_files
-	echo "Check complete."
-	echo "Looks good, a nice Athena!"
+	echo "Comprobacion completada."
+	echo "Parece estar bien!"
 	for i in ${L_SRV} ${C_SRV} ${M_SRV}
 	    do
 		start_serv $i
 	    done
-        echo "Now Started Athena."
+        echo "Iniciando spAthena ahora."
 ;;
     'watch')
 	for i in ${L_SRV} ${C_SRV} ${M_SRV}
 	    do		
 		watch_serv $i 10 3
 	    done
- 	echo "Now watching Athena."
+ 	echo "Viendo spAthena."
 ;;	
     'stop')
 	for i in ${L_SRV} ${C_SRV} ${M_SRV}
@@ -108,7 +108,7 @@ case $1 in
 	for i in ${L_SRV} ${C_SRV} ${M_SRV}
 	do
 		get_status ${i}
-		if [ ${PSRUN} ]; then echo "'${i}' is running p${PSRUN}"; else echo "'${i}' seem down"; fi
+		if [ ${PSRUN} ]; then echo "'${i}' esta funcionando p${PSRUN}"; else echo "'${i}' esta caido"; fi
 	done
 ;;	
     *)
